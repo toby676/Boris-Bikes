@@ -31,11 +31,12 @@ describe DockingStation do
       bike = Bike.new
       expect(subject.dock(bike)).to eq bike
     end
+    it 'docks 20 bikes' do
+      expect{20.times {subject.dock(Bike.new)}}.not_to raise_error
+    end
     it 'raises an error when there is no space available' do
-      bike = Bike.new
-      subject.dock(bike)
-      bike = Bike.new
-      expect{subject.dock(bike)}.to raise_error("No space available!")
+      20.times {subject.dock(Bike.new)}
+      expect{subject.dock(Bike.new)}.to raise_error("No space available!")
     end
   end
 
