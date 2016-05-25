@@ -21,11 +21,11 @@ class DockingStation
   private
 
     def full?
-      true if @bikes.size >= @capacity
+      @bikes.size >= @capacity
     end
 
     def empty?
-      true if @bikes.empty?
+      @bikes.empty?
     end
 
 end
