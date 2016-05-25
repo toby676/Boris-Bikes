@@ -2,12 +2,12 @@ require 'docking_station'
 require 'bike'
 
 describe DockingStation do
-  # it 'responds to release bike' do
-  #   expect(DockingStation.new).to respond_to :release_bike
-  # end
+  # checks custom functions
   it {is_expected.to respond_to :release_bike}
+  it {is_expected.to respond_to(:dock).with(1).argument }
+  it {is_expected.to respond_to :bike }
+
   it 'releases a bike' do
-    #expect(DockingStation.new).to
     docking_station = DockingStation.new
     docking_station.dock(Bike.new)
     bike = docking_station.release_bike
@@ -19,8 +19,6 @@ describe DockingStation do
     expect{docking_station.release_bike}.to raise_error("No Bikes")
   end
 
-  it {is_expected.to respond_to(:dock).with(1).argument }
-  it {is_expected.to respond_to :bike }
   it 'allows a bike to dock' do
     station = DockingStation.new
     bike = Bike.new
