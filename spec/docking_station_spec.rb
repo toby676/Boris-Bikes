@@ -2,7 +2,7 @@ require 'docking_station'
 require 'bike'
 
 describe DockingStation do
-  
+
   before(:each) do
     @docking_station = DockingStation.new
     @cycle = Bike.new
@@ -24,16 +24,21 @@ describe DockingStation do
   end
 
   it 'allows a bike to dock' do
-    expect(@docking_station.dock(@cycle)).to eq(@cycle)
-  end
-  
-  it 'tells if dock is full' do
     @docking_station.dock(@cycle)
+    expect(@docking_station.bike.last).to eq(@cycle)
+  end
+
+  it 'tells if dock is full' do
+    20.times{@docking_station.dock(@cycle)}
     expect{@docking_station.dock(@cycle)}.to raise_error("Is Full")
+  end
+
+  it 'allows 20 bikes to dock' do
+    expect{20.times{@docking_station.dock(@cycle)}}.not_to raise_error
   end
 
   it 'allows to see a docked bike' do
     @docking_station.dock(@cycle)
-    expect(@docking_station.bike).to eq(@cycle)
+    expect(@docking_station.bike.last).to eq(@cycle)
   end
 end
