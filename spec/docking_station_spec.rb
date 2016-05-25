@@ -13,6 +13,12 @@ describe DockingStation do
     expect(bike).to be_working
   end
 
+  it 'doesnt release when empty' do
+    docking_station = DockingStation.new
+    docking_station.release_bike
+    expect{docking_station.release_bike}.to raise_error("No Bikes")
+  end
+
   it {is_expected.to respond_to(:dock).with(1).argument }
   it {is_expected.to respond_to :bike }
   it 'allows a bike to dock' do
