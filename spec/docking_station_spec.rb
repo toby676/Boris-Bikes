@@ -9,13 +9,13 @@ describe DockingStation do
   it 'releases a bike' do
     #expect(DockingStation.new).to
     docking_station = DockingStation.new
+    docking_station.dock(Bike.new)
     bike = docking_station.release_bike
     expect(bike).to be_working
   end
 
   it 'doesnt release when empty' do
     docking_station = DockingStation.new
-    docking_station.release_bike
     expect{docking_station.release_bike}.to raise_error("No Bikes")
   end
 

@@ -1,12 +1,13 @@
 
 class DockingStation
   attr_accessor :bike
+  # def initialize
+  #   @bike = Bike.new
+  # end
   def release_bike
-    if @bike
-      Bike.new
-    else  
-      raise "No Bikes"
-    end
+    raise "No Bikes" if !(@bike)
+    return @bike
+
   end
 
   def dock(bike)
