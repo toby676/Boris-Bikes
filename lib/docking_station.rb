@@ -11,6 +11,7 @@ class DockingStation
   end
 
   def dock(bike)
+    raise "Is Full" if @bike
     @bike = bike
   end
   # replaced by attr_accessor
