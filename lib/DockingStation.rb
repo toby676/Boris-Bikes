@@ -14,7 +14,9 @@ class DockingStation
 	def release_bike
 	  raise "No bikes available!" if empty?
 	  raise "Sorry, there are no working bikes available!" if bikes.all? {|bike| bike.broken?}
-	  bikes.find {|bike| bike.broken? == nil || bike.broken? == false}
+	  new_bike = bikes.find {|bike| !bike.broken?}
+	  bikes.delete(new_bike)
+	  new_bike
 	end
 
 	def dock(bike)

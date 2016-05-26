@@ -83,7 +83,16 @@ describe DockingStation do
       expect{station.release_bike}.not_to raise_error
     end
 
-
+    it 'raises error already removed all working bikes' do
+      station = DockingStation.new
+      bike1 = Bike.new
+      bike2 = Bike.new
+      bike1.report_broken
+      station.dock(bike2)
+      station.dock(bike1)
+      station.release_bike
+      expect{station.release_bike}.to raise_error("Sorry, there are no working bikes available!")
+    end
 
   end
 
