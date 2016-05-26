@@ -72,6 +72,19 @@ describe DockingStation do
       station.dock(bike)
       expect{station.release_bike}.to raise_error("Sorry, there are no working bikes available!")
     end
+
+    it 'releases a bike when there are working bikes and the last one is broken' do
+      station = DockingStation.new
+      bike1 = Bike.new
+      bike2 = Bike.new
+      bike1.report_broken
+      station.dock(bike2)
+      station.dock(bike1)
+      expect{station.release_bike}.not_to raise_error
+    end
+
+
+
   end
 
 end
