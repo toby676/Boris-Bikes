@@ -1,5 +1,6 @@
 class DockingStation
   attr_accessor :bike
+  DEFAULT_CAPACITY=20
   def initialize
     @bike = []
   end
@@ -18,7 +19,7 @@ class DockingStation
   private
 
   def full?
-    return true if @bike.length >= 20
+    return true if @bike.length >= DEFAULT_CAPACITY
     false
   end
 

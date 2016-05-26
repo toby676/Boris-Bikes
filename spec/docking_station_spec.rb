@@ -6,6 +6,7 @@ describe DockingStation do
   before(:each) do
     @docking_station = DockingStation.new
     @cycle = Bike.new
+    @capacity = DockingStation::DEFAULT_CAPACITY
   end
 
   # checks custom functions
@@ -29,12 +30,12 @@ describe DockingStation do
   end
 
   it 'tells if dock is full' do
-    20.times{@docking_station.dock(@cycle)}
+    @capacity.times{@docking_station.dock(@cycle)}
     expect{@docking_station.dock(@cycle)}.to raise_error("Is Full")
   end
 
-  it 'allows 20 bikes to dock' do
-    expect{20.times{@docking_station.dock(@cycle)}}.not_to raise_error
+  it 'allows #{@capacity} bikes to dock' do
+    expect{@capacity.times{@docking_station.dock(@cycle)}}.not_to raise_error
   end
 
   it 'allows to see a docked bike' do
