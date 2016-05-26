@@ -2,8 +2,8 @@ require 'docking_station'
 
 describe DockingStation do
 
-  let(:cycle) { double :cycle }
-
+  let(:cycle) { double(:cycle, :working? => false, :report => false) }
+  let(:bicycle) { double(:bicycle, :working? => true, :report => true) }
   before(:each) do
     @docking_station = DockingStation.new()
     @capacity = DockingStation::DEFAULT_CAPACITY
@@ -24,8 +24,7 @@ describe DockingStation do
 
   context '#release_bike' do
     it 'releases a bike' do
-      allow(cycle).to receive(:working?).and_return(true)
-      @docking_station.dock(cycle)
+      @docking_station.dock(bicycle)
       cycle = @docking_station.release_bike
       expect(cycle).to be_working
     end
@@ -35,10 +34,6 @@ describe DockingStation do
     end
 
     it 'doesnt release when broken' do
-      allow(cycle).to receive(:working?).and_return(false)
-      allow(cycle).to receive(:report).and_return(false)
-      bicycle = double(:bicycle)
-      allow(bicycle).to receive(:working?).and_return(true)
       @docking_station.dock(bicycle)
       cycle.report
       @docking_station.dock(cycle)
@@ -46,8 +41,6 @@ describe DockingStation do
     end
 
     it 'reports all bikes are broken' do
-      allow(cycle).to receive(:working?).and_return(false)
-      allow(cycle).to receive(:report).and_return(false)
       cycle.report
       @docking_station.dock(cycle)
       expect{@docking_station.release_bike}.to raise_error("All Bikes Are Broken")
@@ -70,8 +63,6 @@ describe DockingStation do
     end
 
     it 'allows even broken bikes to be docked' do
-      allow(cycle).to receive(:working?).and_return(false)
-      allow(cycle).to receive(:report).and_return(false)
       cycle.report
       expect{@docking_station.dock(cycle)}.not_to raise_error
       
