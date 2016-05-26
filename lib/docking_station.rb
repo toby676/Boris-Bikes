@@ -1,4 +1,3 @@
-
 class DockingStation
   attr_accessor :bike
   def initialize
