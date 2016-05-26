@@ -31,12 +31,21 @@ describe DockingStation do
       bike = Bike.new
       expect(subject.dock(bike).last).to eq bike
     end
-    it 'docks 20 bikes' do
+    it 'docks 20 bikes when capacity is set to default' do
       expect{DockingStation::DEFAULT_CAPACITY.times {subject.dock(Bike.new)}}.not_to raise_error
     end
-    it 'raises an error when there is no space available' do
+    it 'raises an error when there is no space available when capacity is set to default' do
       DockingStation::DEFAULT_CAPACITY.times {subject.dock(Bike.new)}
       expect{subject.dock(Bike.new)}.to raise_error("No space available!")
+    end
+    it 'docks 50 bikes when capacity is set to 50' do
+      station = DockingStation.new(50)
+      expect{50.times {station.dock(Bike.new)}}.not_to raise_error
+    end
+    it 'raises an error at 51 bikes when capacity is set to 50' do
+      station = DockingStation.new(50)
+      50.times {station.dock(Bike.new)}
+      expect{station.dock(Bike.new)}.to raise_error("No space available!")
     end
   end
 
@@ -46,6 +55,14 @@ describe DockingStation do
   	expect(subject.bikes.last).to eq bike
   end
 
+  describe '#initialize' do
+    it 'initialises with one argument' do
+      expect{DockingStation.new(30)}.not_to raise_error
+    end
+    it 'initialises with default capacity' do
+      expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+    end
+  end
 end
 
 
