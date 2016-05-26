@@ -21,12 +21,12 @@ describe DockingStation do
   end
 
   it "should fail to dock a bike if the docking station is full" do
-    20.times { subject.dock(Bike.new) }
+    DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }
     expect{ subject.dock(Bike.new) }.to raise_error("Docking station is full")
   end
 
   it "should accept 20 bikes into the docking station" do
-    expect{ 20.times { subject.dock(Bike.new) }}.not_to raise_error
+    expect{ DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }}.not_to raise_error
   end
 
  end
