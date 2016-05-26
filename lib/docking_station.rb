@@ -9,7 +9,7 @@ class DockingStation
   def release_bike
     raise "No Bikes" if empty?
     raise "All Bikes Are Broken" if all_broke?
-    shift if !(@bike.last.working) 
+    shift if !(@bike.last.working?) 
     @bike.pop
   end
 
