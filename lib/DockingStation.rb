@@ -2,7 +2,7 @@ require_relative 'Bike'
 
 class DockingStation
 
-  attr_reader :bike
+  attr_reader :bikes
 
   	def initialize
   	  @bikes = []
@@ -16,7 +16,6 @@ class DockingStation
 	def dock(bike)
 	  raise "No space available!" if full?
 	  @bikes << bike
-	  @bike = bike
 	end
 
 	private
