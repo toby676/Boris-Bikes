@@ -8,8 +8,9 @@ class DockingStation
 
   def release_bike
     raise "No Bikes" if empty?
+    raise "All Bikes Are Broken" if all_broke?
+    shift if !(@bike.last.working) 
     @bike.pop
-
   end
 
   def dock(bike)
@@ -27,5 +28,17 @@ class DockingStation
   def empty?
     return true if @bike.length == 0
     false
+  end
+
+  def all_broke?
+    current_bike = @bike.map{|b| b.working?}
+    return false if current_bike.include?(true)
+    true
+  end
+
+  def shift
+    a = @bike.pop
+    @bike.unshift(a)
+    raise "Broken Bike, Please Try Again"
   end
 end

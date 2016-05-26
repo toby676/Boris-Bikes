@@ -32,6 +32,19 @@ describe DockingStation do
     it 'doesnt release when empty' do
       expect{@docking_station.release_bike}.to raise_error("No Bikes")
     end
+
+    it 'doesnt release when broken' do
+      @docking_station.dock(Bike.new)
+      @cycle.report
+      @docking_station.dock(@cycle)
+      expect{@docking_station.release_bike}.to raise_error("Broken Bike, Please Try Again")
+    end
+
+    it 'reports all bikes are broken' do
+      @cycle.report
+      @docking_station.dock(@cycle)
+      expect{@docking_station.release_bike}.to raise_error("All Bikes Are Broken")
+    end
   end
 
   context '#dock' do
