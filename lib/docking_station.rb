@@ -18,6 +18,12 @@ class DockingStation
     @bike.push(bike)
   end
 
+  def all_fixed?
+    current_bike = @bike.map{|b| b.working?}
+    return false if current_bike.include?(false)
+    true
+  end
+
   private
 
   def full?

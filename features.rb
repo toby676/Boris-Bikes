@@ -1,25 +1,15 @@
 require './lib/docking_station.rb'
 require './lib/bike.rb'
+require './lib/garage.rb'
+require './lib/van.rb'
+
 station = DockingStation.new(35)
 cycle = Bike.new
+garage = Garage.new
+van = Van.new
 
-cycle.report
+van.collect(station)
+van.deliver(garage)
 
-station.dock(cycle)
-
-p "======================"
-p "suspect line"
-p "print station"
-p station
-p "print station.bike"
-p station.bike
-p "print station.bike.last"
-p station.bike.last
-p "print station.bike.last.working?"
-p station.bike.last.working?
-station.bike.last.working?
-p "line printed"
-bicycle = Bike.new
-bicycle.report
-station.dock(bicycle)
-
+van.collect(garage)
+van.deliver(station)
