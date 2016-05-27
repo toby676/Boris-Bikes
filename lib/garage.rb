@@ -1,3 +1,0 @@
-class Garage
-
-end

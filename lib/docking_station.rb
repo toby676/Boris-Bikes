@@ -1,50 +1,37 @@
+require_relative 'Bike'
+
 class DockingStation
-  attr_accessor :bike, :capacity
-  DEFAULT_CAPACITY=20
-  def initialize(cap=DEFAULT_CAPACITY)
-    @bike = []
-    @capacity = cap
-  end
 
-  def release_bike
-    raise "No Bikes" if empty?
-    raise "All Bikes Are Broken" if all_broke?
-    shift if !(@bike.last.working?) 
-    @bike.pop
-  end
+  attr_reader :bikes, :capacity
 
-  def dock(bike)
-    raise "Is Full" if full?
-    @bike.push(bike)
-  end
+  DEFAULT_CAPACITY = 20
 
-  def all_fixed?
-    current_bike = @bike.map{|b| b.working?}
-    return false if current_bike.include?(false)
-    true
-  end
+  	def initialize(capacity = DEFAULT_CAPACITY)
+  	  @bikes = []
+  	  @capacity = capacity
+  	end
 
-  private
+	def release_bike
+	  raise "No bikes available!" if empty?
+	  raise "Sorry, there are no working bikes available!" if bikes.all? {|bike| bike.broken?}
+	  new_bike = bikes.find {|bike| !bike.broken?}
+	  bikes.delete(new_bike)
+	  new_bike
+	end
 
-  def full?
-    return true if @bike.length >= @capacity
-    false
-  end
+	def dock(bike)
+	  raise "No space available!" if full?
+	  bikes << bike
+	end
 
-  def empty?
-    return true if @bike.length == 0
-    false
-  end
+	private
 
-  def all_broke?
-    current_bike = @bike.map{|b| b.working?}
-    return false if current_bike.include?(true)
-    true
-  end
+	def full?
+	  true if bikes.length >= capacity
+	end
 
-  def shift
-    a = @bike.pop
-    @bike.unshift(a)
-    raise "Broken Bike, Please Try Again"
-  end
+	def empty?
+	  true if bikes.empty?
+	end
+
 end
