@@ -20,7 +20,16 @@ describe Van do
     end
     it 'returns an array from station' do
        expect(van.collect(@station)).to be_a(Array)
-     end
+    end
+
+    context '#deliver' do
+    end
+
+    context ':contents' do
+
+
+
+    end
 
   end
 end
