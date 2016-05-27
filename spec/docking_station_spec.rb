@@ -3,7 +3,7 @@ require 'docking_station'
 describe DockingStation do
 	
   let(:bike) { double(:bike, :broken? => false, :working? => true) }
-  let(:broke) { double(:broke, :broken? => true) }  
+  let(:broke) { double(:broke, :broken? => true, :working? => false) }  
 
   before(:each) do
     @station = DockingStation.new
@@ -75,13 +75,23 @@ describe DockingStation do
       50.times {station.dock(bike)}
       expect{station.dock(bike)}.to raise_error("No space available!")
     end
+
   end
 
-  context ':bikes' do
-    it 'returns docked bike' do 
-    	subject.dock(bike)
-    	expect(subject.bikes.last).to eq bike
+  context '#bikes_for_moving' do
+    it 'returns an array of the broken bikes' do
+      5.times {@station.dock(bike)}
+      5.times {@station.dock(broke)}
+      expect(@station.bikes_for_moving.length).to eq 5
     end
+    it 'sorts the bikes into an array of broken bikes' do
+      5.times do
+        @station.dock(bike)
+        @station.dock(broke)
+      end
+      expect(@station.bikes_for_moving.length).to eq 5
+    end
+
   end
 
   context '#initialize' do
@@ -92,6 +102,16 @@ describe DockingStation do
       expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
     end
   end
+
+  context ':bikes' do
+    it 'returns docked bike' do 
+    	subject.dock(bike)
+    	expect(subject.bikes.last).to eq bike
+    end
+
+  end
+
+
 
 end
 

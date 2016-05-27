@@ -1,8 +1,9 @@
 require 'van'
+require 'docking_station'
 
 describe Van do
 
-  let(:station) { double(:station) }
+  # let(:station) { double(:station) }
   let(:van) {Van.new}
 
 
@@ -11,8 +12,15 @@ describe Van do
   end
 
   context "#collect" do
-    it "requests broken bikes from station" do
-       expect{van.collect(station)}.not_to raise_error
+    before(:each) do
+      @station = DockingStation.new
     end
+    it "requests broken bikes from station" do
+       expect{van.collect(@station)}.not_to raise_error
+    end
+    it 'returns an array from station' do
+       expect(van.collect(@station)).to be_a(Array)
+     end
+
   end
 end

@@ -24,6 +24,21 @@ class DockingStation
 	  bikes << bike
 	end
 
+  def bikes_for_moving
+  	working = []
+  	broken = []
+  	@bikes.each do |bike|
+  		if bike.broken?
+  			broken << bike
+  		else
+  			working << bike
+  		end
+  	end
+  	@bikes = working
+  	broken
+  end
+  		
+
 	private
 
 	def full?
